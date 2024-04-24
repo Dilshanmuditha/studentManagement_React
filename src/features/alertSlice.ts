@@ -3,14 +3,14 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 interface AlertState {
   alertState: boolean;
   alertType: 'Success' | 'Error' | 'Warning' | 'default';
-  alertMassage: string;
+  alertMessage: string;
   alertDescription: string;
 }
 
 const initialState: AlertState = {
   alertState: false,
   alertType: "default",
-  alertMassage: "",
+  alertMessage: "",
   alertDescription: "",
 };
 
@@ -19,11 +19,11 @@ const alertSlice = createSlice({
   initialState,
   reducers: {
     addAlert: (state, action: PayloadAction<AlertState>) => {
-      const { alertState, alertType, alertMassage, alertDescription } =
+      const { alertState, alertType, alertMessage, alertDescription } =
         action.payload;
       state.alertState = alertState;
       state.alertType = alertType;
-      state.alertMassage = alertMassage;
+      state.alertMessage = alertMessage;
       state.alertDescription = alertDescription;
     },
   },

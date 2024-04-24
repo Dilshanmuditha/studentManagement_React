@@ -79,7 +79,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const AXIOS_INSTANCE = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true
+  withCredentials: false
 });
 
 const requestHandler = (request:any) => {

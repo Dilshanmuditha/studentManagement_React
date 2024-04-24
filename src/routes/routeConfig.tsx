@@ -16,6 +16,7 @@ import Student from "../pages/student";
 import Lecturer from "../pages/lecturer";
 import Department from "../pages/department";
 import Module from "../pages/module";
+import AddStudent from "../pages/student/addStudent";
 
 
 interface routesType {
@@ -57,7 +58,22 @@ const ROUTES:routesType[] = [
     sidebar:true,
     main:true,
     action:"navigate",
-    children: [],
+    children: [{
+      id: 200,
+      label: "Students",
+      icon: "",
+      path: "/students/students",
+      component: <Student/>,
+      action:"navigate",
+    },
+    {
+      id: 201,
+      label: "Add Student",
+      icon: "",
+      path: "/students/add",
+      component: <AddStudent/>,
+      action:"navigate",
+    },],
   },
   {
     id: 3,

@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomButton from "../../components/buttons";
 import CustomInput from "../../components/inputBox";
 import { adminRegister } from "../../services/AuthService";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Chip, IconButton, InputAdornment, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import CustomTable from "../../components/dataGrid";
+import { GridColDef } from "@mui/x-data-grid";
+import AXIOS_INSTANCE from "../../services/AxiosInstance";
 
 const Users = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [tablePage, setTablePage] = useState(1)
+  const [tableRow, setTableRow] = useState([])
+  const [resetFilter, setResetFilter] = useState(false)
+  const [selectedRows, setSelectedRows] = useState([])
+  const [tableAllRowCount, setTableAllRowCount] = useState(0)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState({
     state: false,
     massage: "",
   });
+  const handlePageChange = (newPage: number) => {
+    setTablePage(newPage + 1)
+  }
   const [felidValue, setFelidValue] = useState({
     name: "",
     nameError: false,
@@ -23,6 +35,9 @@ const Users = () => {
     password: "",
     passwordError: false,
     passwordErrorMsg: "",
+    mobile_number: "",
+    mobile_numberError: false,
+    mobile_numberErrorMsg: "",
   });
   const handleInputValue = (e: any) => {
     if (felidValue.nameError && e.target.name == "name") {
@@ -95,6 +110,7 @@ const Users = () => {
         name: felidValue.name,
         email: felidValue.email,
         password: felidValue.password,
+        mobile_number: felidValue.mobile_number,
       };
       console.log(body);
       const { data } = await adminRegister(body);
@@ -111,8 +127,56 @@ const Users = () => {
       });
     }
   };
-
+  const columns: GridColDef[] = [
+    {
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      align: "left",
+      renderCell: (params) => {
+        return (
+          <Typography
+            sx={{
+              fontSize: "14px",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              // setCurrentSelectedUserId(params?.row?.id)
+            }}>
+            {params.value}
+          </Typography>
+        )
+      },
+    },
+    { field: "email", headerName: "Email Address", flex: 1, align: "left" },
+    { field: "mobile_number", headerName: "Contact Number", flex: 1, align: "left" },
+  ]
+  const fetchRowData = async (filterState: boolean, exportSate: boolean) => {
+    let parameters: any = {
+      page: tablePage,
+    }
+    
+    try {
+      setLoading(true)
+      const { data } = await AXIOS_INSTANCE.get(`v1/admins`, {
+        // params: parameters,
+      })
+      setTableRow(data)
+      setTableAllRowCount(data.admin.total)
+      setResetFilter(false)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+    }
+  }
+  
+  useEffect(() => {
+    fetchRowData(false, false)
+  }, [tablePage])
   return (
+   <>
     <div
       style={{
         display: "flex",
@@ -145,6 +209,18 @@ const Users = () => {
         errorTextState={felidValue.emailError}
         errorText={felidValue.emailErrorMsg}
         value={felidValue.email}
+        style={{ width: "750px" }}
+      />
+      <CustomInput
+        id={2}
+        TextFieldName={"mobile_number"}
+        labelText={"Enter your Mobile number"}
+        TextFieldType={"text"}
+        variant={"outlined"}
+        onchangeFunction={handleInputValue}
+        errorTextState={felidValue.mobile_numberError}
+        errorText={felidValue.mobile_numberErrorMsg}
+        value={felidValue.mobile_number}
         style={{ width: "750px" }}
       />
       <CustomInput
@@ -190,6 +266,21 @@ const Users = () => {
         buttonFunction={adminRegisterFunction}
       />
     </div>
+    <div style={{ width: "100%", height: "100%" }}>
+            <CustomTable
+              rows={tableRow}
+              columns={columns}
+              checkboxState={true}
+              columnGroupingState={false}
+              columnGroupingModel={[]}
+              // allRowCount={tableAllRowCount}
+              pageSize={[10, 20]}
+              // page={tablePage - 1}
+              // dataLoading={loading}
+              // onPageChange={handlePageChange}
+              setSelectedRows={setSelectedRows}
+            />
+          </div></>
   );
 };
 

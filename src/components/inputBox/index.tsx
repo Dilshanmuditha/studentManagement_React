@@ -7,8 +7,10 @@ const CustomInput = ({
   variant,
   TextFieldType,
   value,
+  placeHolderText,
   onchangeFunction,
   errorTextState,
+  textFieldSize,
   errorText,
   style,
   startAdornment,
@@ -20,10 +22,12 @@ const CustomInput = ({
   TextFieldType: string
   variant: "outlined" | "filled" | "standard";
   value?: any;
+  textFieldSize?: "small" | "medium"
   onchangeFunction:any
   errorTextState: boolean;
   errorText: string;
   style?: any;
+  placeHolderText?: string
   startAdornment?: any;
   endAdornment?: any;
 }) => {
@@ -35,7 +39,9 @@ const CustomInput = ({
         name={TextFieldName}
         label={labelText}
         variant={variant}
+        placeholder={placeHolderText || ""}
         value={value}
+        size={textFieldSize}
         type={TextFieldType}
         error={errorTextState}
         helperText={errorText}

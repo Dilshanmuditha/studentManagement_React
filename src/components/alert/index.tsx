@@ -12,11 +12,23 @@ const AlertComponent = () => {
   const iconViewer = () => {
     switch (alert.alertType) {
       case "Success":
-        return <><CheckIcon sx={{ fontSize: "60px", color: "#51ff00" }}/></>;
+        return (
+          <>
+            <CheckIcon sx={{ fontSize: "60px", color: "#51ff00" }} />
+          </>
+        );
       case "Error":
-        return <><ClearIcon sx={{ fontSize: "60px", color: "#ff0000" }}/></>;
+        return (
+          <>
+            <ClearIcon sx={{ fontSize: "60px", color: "#ff0000" }} />
+          </>
+        );
       case "Warning":
-        return <><QuestionMarkIcon sx={{ fontSize: "60px", color: "#ffbb00" }}/></>;
+        return (
+          <>
+            <QuestionMarkIcon sx={{ fontSize: "60px", color: "#ffbb00" }} />
+          </>
+        );
       default:
         return <></>;
     }
@@ -27,7 +39,7 @@ const AlertComponent = () => {
       addAlert({
         alertState: false,
         alertType: "default",
-        alertMassage: "",
+        alertMessage: "",
         alertDescription: "",
       })
     );
@@ -37,7 +49,7 @@ const AlertComponent = () => {
     <>
       <Snackbar
         open={alert.alertState}
-        autoHideDuration={6000}
+        autoHideDuration={2000}
         onClose={() => {
           alertCloseHandler();
         }}
@@ -53,12 +65,15 @@ const AlertComponent = () => {
             borderRadius: 2,
             maxWidth: "450px",
             height: "130px",
+            backgroundColor: "#ffffff",
           }}
         >
           <div
             style={{
               display: "flex",
               flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
               gap: 5,
               height: "100%",
             }}
@@ -70,9 +85,9 @@ const AlertComponent = () => {
                 alignItems: "center",
                 // backgroundColor: "#aaffa281",
                 borderRadius: "80px",
-                padding: "5px",
-                width: "200px",
-                height: "100%",
+                padding: "60px",
+                width: "56px",
+                height: "56px",
               }}
             >
               {iconViewer()}
@@ -81,15 +96,17 @@ const AlertComponent = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
+                justifyContent: "center",
                 // backgroundColor: "#3500f7",
                 gap: 2,
                 height: "100%",
+                paddingRight: "20px",
               }}
             >
-              <div style={{ fontSize: "2rem", fontWeight: 700 }}>
-                {alert.alertMassage}
+              <div style={{ fontSize: "18px", fontWeight: 600 }}>
+                {alert.alertMessage}
               </div>
-              <div style={{ fontSize: "1rem", fontWeight: 400 }}>
+              <div style={{ fontSize: "14px", fontWeight: 400 }}>
                 {alert.alertDescription}
               </div>
             </div>
