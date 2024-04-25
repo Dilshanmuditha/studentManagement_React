@@ -17,6 +17,8 @@ import Lecturer from "../pages/lecturer";
 import Department from "../pages/department";
 import Module from "../pages/module";
 import AddStudent from "../pages/student/addStudent";
+import AddLecturer from "../pages/lecturer/addLecturer";
+
 
 
 interface routesType {
@@ -95,10 +97,10 @@ const ROUTES:routesType[] = [
       },
       {
         id: 301,
-        label: "Quiz",
+        label: "AddLecturer",
         icon: "",
-        path: "/lecturer/quiz",
-        component: <Lecturer/>,
+        path: "/lecturer/AddLecturer",
+        component: <AddLecturer/>,
         action:"navigate",
       },
     ],
