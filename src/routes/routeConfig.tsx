@@ -17,6 +17,7 @@ import Lecturer from "../pages/lecturer";
 import Department from "../pages/department";
 import Module from "../pages/module";
 import AddStudent from "../pages/student/addStudent";
+import Addmodule from "../pages/addmodule";
 
 
 interface routesType {
@@ -105,7 +106,7 @@ const ROUTES:routesType[] = [
   },
   {
     id: 4,
-    label: "University",
+    label: "Course",
     icon: <CheckBoxIcon/>,
     path: "/University",
     component: <Department/>,
@@ -115,18 +116,26 @@ const ROUTES:routesType[] = [
     children: [
       {
         id: 400,
-        label: "Degree",
+        label: "Course",
         icon: "",
         path: "/University/degree",
-        component: <Department/>,
+        component: <Module/>,
         action:"navigate",
       },
       {
         id: 401,
-        label: "Module",
+        label: "Add Course",
         icon: "",
-        path: "/University/module",
-        component: <Module/>,
+        path: "/University/module/addcourse",
+        component: <Department/>,
+        action:"navigate",
+      },
+      {
+        id: 402,
+        label: "Add Module",
+        icon: "",
+        path: "/University/module/addmodule",
+        component: <Addmodule/>,
         action:"navigate",
       },
     ],
@@ -175,4 +184,4 @@ const ROUTES:routesType[] = [
   },
 ];
 
-export default ROUTES
+export default ROUTES
