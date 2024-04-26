@@ -25,6 +25,7 @@ const StudentView = ({
       const response = await AXIOS_INSTANCE.get(
         `/students/${selectedStudentID}`
       );
+      
       console.log(response.data)
       if (response.status == 200) {
         setStudentDetail(response.data);
@@ -57,7 +58,6 @@ const StudentView = ({
       isClose={true}
     >
       {isLoading ? (
-        // Show loader while loading
         <Box
           sx={{
             display: "flex",

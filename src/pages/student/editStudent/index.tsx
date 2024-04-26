@@ -60,6 +60,7 @@ const EditStudent = ({
         };
         console.log(body);
         const data = await AXIOS_INSTANCE.put(`/student/${selectedStudentID}`, body);
+
         console.log("response", data);
         if (data.status == 200) {
           dispatch(
@@ -81,6 +82,7 @@ const EditStudent = ({
           const response = await AXIOS_INSTANCE.get(
             `/students/${selectedStudentID}`
           );
+          
           console.log(response.data)
           if (response.status == 200) {
             setFormData({
@@ -359,4 +361,5 @@ const EditStudent = ({
   )
 }
 
-export default EditStudent
+export default EditStudent
+

@@ -349,7 +349,7 @@ function AddLecturer() {
           <Grid item>
             <CustomButton
               variant={"outlined"}
-              buttonText={"Cancel"}
+              buttonText={"Clear"}
               id={1}
               // buttonFunction={() => {
               //   //   handleClosePopup()
