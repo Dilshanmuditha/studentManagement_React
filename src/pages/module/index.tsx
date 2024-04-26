@@ -1,214 +1,83 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from "react";
+import { Box, Grid, Typography } from "@mui/material";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-function Module() {
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const [expandedModule, setExpandedModule] = useState('');
+export interface Course {
+  id: string;
+  name: string;
+}
 
-  const courseOptions = [
-    'Data Science',
-    'Digital Marketing',
-    'Project Management',
-    'Business Analytics',
-    'UX/UI Design'
-  ];
+function CourseList() {
+  const [courses, setCourses] = useState<Course[]>([]);
 
-  const handleCourseChange = (e) => {
-    setSelectedCourse(e.target.value);
-    setExpandedModule('');
-  };
-
-  const dataScienceModules = [
-    {
-      name: 'Statistics',
-      content: [
-        { text: 'Descriptive statistics (mean, median, variance, etc.)', pdfLink: '/statistics.pdf' },
-        { text: 'Inferential statistics (hypothesis testing, confidence intervals)', pdfLink: '/statistics.pdf' },
-        { text: 'Probability distributions (normal, binomial, etc.)', pdfLink: '/statistics.pdf' }
-      ]
-    },
-    {
-      name: 'Programming and Tools',
-      content: [
-        { text: 'Python or R programming', pdfLink: '/programming.pdf' },
-        { text: 'Data manipulation with pandas or dplyr', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Data visualization using matplotlib, seaborn, or ggplot2', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Machine Learning',
-      content: [
-        { text: 'Supervised learning (regression, classification)', pdfLink: '/programming.pdf' },
-        { text: 'Unsupervised learning (clustering, dimensionality reduction)', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Model evaluation and selection', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Data Preprocessing',
-      content: [
-        { text: 'Data cleaning (handling missing values, outliers)', pdfLink: '/programming.pdf' },
-        { text: 'Feature engineering (creating new features)', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Data scaling and normalization', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Big Data and Cloud Computing',
-      content: [
-        { text: 'Hadoop, Spark, or AWS', pdfLink: '/programming.pdf' },
-        { text: 'Distributed computing for large datasets', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-    {
-      name: 'Deep Learning',
-      content: [
-        { text: 'Neural networks, TensorFlow, or PyTorch', pdfLink: '/programming.pdf' },
-        { text: 'Convolutional neural networks (CNNs) and recurrent neural networks (RNNs)', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-    {
-      name: 'Business Acumen',
-      content: [
-        { text: 'Understanding domain-specific problems', pdfLink: '/programming.pdf' },
-        { text: 'Communicating results to stakeholders', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-   
-  ];
-
-
-  const digitalMarketingModules = [
-    {
-      name: 'Statistics',
-      content: [
-        { text: 'Descriptive statistics (mean, median, variance, etc.)', pdfLink: '/statistics.pdf' },
-        { text: 'Inferential statistics (hypothesis testing, confidence intervals)', pdfLink: '/statistics.pdf' },
-        { text: 'Probability distributions (normal, binomial, etc.)', pdfLink: '/statistics.pdf' }
-      ]
-    },
-    {
-      name: 'Programming and Tools',
-      content: [
-        { text: 'Python or R programming', pdfLink: '/programming.pdf' },
-        { text: 'Data manipulation with pandas or dplyr', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Data visualization using matplotlib, seaborn, or ggplot2', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Machine Learning',
-      content: [
-        { text: 'Supervised learning (regression, classification)', pdfLink: '/programming.pdf' },
-        { text: 'Unsupervised learning (clustering, dimensionality reduction)', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Model evaluation and selection', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Data Preprocessing',
-      content: [
-        { text: 'Data cleaning (handling missing values, outliers)', pdfLink: '/programming.pdf' },
-        { text: 'Feature engineering (creating new features)', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Data scaling and normalization', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Big Data and Cloud Computing',
-      content: [
-        { text: 'Hadoop, Spark, or AWS', pdfLink: '/programming.pdf' },
-        { text: 'Distributed computing for large datasets', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-    {
-      name: 'Deep Learning',
-      content: [
-        { text: 'Neural networks, TensorFlow, or PyTorch', pdfLink: '/programming.pdf' },
-        { text: 'Convolutional neural networks (CNNs) and recurrent neural networks (RNNs)', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-    {
-      name: 'Business Acumen',
-      content: [
-        { text: 'Understanding domain-specific problems', pdfLink: '/programming.pdf' },
-        { text: 'Communicating results to stakeholders', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-   
-  ];
-
-
-  const handleModuleClick = (moduleName) => {
-    if (expandedModule === moduleName) {
-      setExpandedModule('');
-    } else {
-      setExpandedModule(moduleName);
+  useEffect(() => {
+    async function fetchCourses() {
+      try {
+        const response = await axios.get("/api/courses");
+        setCourses(response.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
     }
-  };
 
-  
+    fetchCourses();
+  }, []);
+
+  // Add an example course
+  useEffect(() => {
+    setCourses((prevCourses) => [
+      ...prevCourses,
+      { id: "123", name: "Example Course" },
+    ]);
+  }, []);
   return (
-    <div>
-      <label htmlFor="course">Select course:</label>
-      <select id="course" value={selectedCourse} onChange={handleCourseChange}>
-        <option value="">--Select a course--</option>
-        {courseOptions.map((course, index) => (
-          <option key={index} value={course}>
-            {course}
-          </option>
+    <Box
+      sx={{
+        padding: "30px",
+        flex: 1,
+        overflow: "hidden",
+        overflowY: "auto",
+      }}
+    >
+      <Grid item xs={12}>
+        <Typography
+          sx={{
+            fontSize: "24px",
+            marginBottom: "20px",
+            textAlign: "center",
+            backgroundColor: "#024D81",
+            color: "white",
+            borderRadius: "10px",
+            height: "40px",
+          }}
+        >
+          Course Register
+        </Typography>
+      </Grid>
+      <Grid container spacing={2}>
+        {courses.map((course) => (
+          <Grid item xs={4} key={course.id}>
+            <Link to={`/modulelist/${course.id}`} style={{ textDecoration: "none" }}>
+              <Typography
+                sx={{
+                  backgroundColor: "#024D81",
+                  color: "white",
+                  borderRadius: "10px",
+                  height: "100px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {course.name}
+              </Typography>
+            </Link>
+          </Grid>
         ))}
-      </select>
-
-      {selectedCourse === 'Data Science' && (
-        <div>
-          <h2>Data Science Course Modules</h2>
-          <ul>
-            {dataScienceModules.map((module, index) => (
-              <li key={index}>
-                <h3 onClick={() => handleModuleClick(module.name)} style={{ cursor: 'pointer' }}>
-                  {module.name}
-                </h3>
-                {expandedModule === module.name && (
-                  <ul>
-                    {module.content.map((item, subIndex) => (
-                      <li key={subIndex}>
-                        <div>{item.text}</div>
-                        <div>
-                          <a href={item.pdfLink} target="_blank" rel="noopener noreferrer">View PDF</a>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-{selectedCourse === 'Digital Marketing' && (
-        <div>
-          <h2>Data Science Course Modules</h2>
-          <ul>
-            {digitalMarketingModules.map((module, index) => (
-              <li key={index}>
-                <h3 onClick={() => handleModuleClick(module.name)} style={{ cursor: 'pointer' }}>
-                  {module.name}
-                </h3>
-                {expandedModule === module.name && (
-                  <ul>
-                    {module.content.map((item, subIndex) => (
-                      <li key={subIndex}>
-                        <div>{item.text}</div>
-                        <div>
-                          <a href={item.pdfLink} target="_blank" rel="noopener noreferrer">View PDF</a>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+      </Grid>
+    </Box>
   );
 }
 
-export default Module;
+export default CourseList;
