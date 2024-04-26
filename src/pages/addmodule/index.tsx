@@ -1,7 +1,6 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
 import CustomInput from "../../components/inputBox";
-import CustomSelect from "../../components/select";
 import AXIOS_INSTANCE from "../../services/AxiosInstance";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../features/alertSlice";
@@ -10,12 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 export interface FormData {
   name: string;
-  nic: string;
-  email: string;
-  mobile: Number | string;
-  userName: string;
-  password: string | number | undefined;
-  confirmpassword: string | number | undefined;
+  coursecode: "0";
+  lecturerId: Number | string;
 }
 
 function Addmodule() {
@@ -24,12 +19,9 @@ function Addmodule() {
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
-    nic: "",
-    email: "",
-    mobile: "",
-    userName: "",
-    password: "",
-    confirmpassword: "",
+    coursecode: "0",
+    lecturerId: "",
+
   });
   const [loading, setLoading] = useState<boolean>(false);
   const handleFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,18 +31,15 @@ function Addmodule() {
     }));
   };
 
-  const courseRegisterFunction = async () => {
+  const moduleRegisterFunction = async () => {
     try {
       const body = {
         name: formData.name,
-        email: formData.email,
-        nic: formData.nic,
-        userName: formData.userName,
-        password: formData.password,
-        mobile: formData.mobile,
+        coursecode: formData.coursecode,
+        lecturerId: formData.lecturerId,
       };
       console.log(body);
-      const data = await AXIOS_INSTANCE.post(`/student`, body);
+      const data = await AXIOS_INSTANCE.post(`/course`, body);
       console.log("response", data);
       if (data.status == 200) {
         dispatch(
@@ -58,11 +47,11 @@ function Addmodule() {
             alertState: true,
             alertType: "Success",
             alertMessage: "Successfully Added",
-            alertDescription: "Student Registration is successfully completed.",
+            alertDescription: "Module Registration is successfully completed.",
           })
         );
       }
-      navigate("/students/students")
+      navigate("/department")
     } catch (error) {
       console.log(error);
     }
@@ -88,14 +77,14 @@ function Addmodule() {
             height: "40px",
           }}
         >
-          Course Register
+          Module Register
         </Typography>
       </Grid>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Typography>Name</Typography>
+              <Typography>Module Name</Typography>
             </Grid>
             <Grid item xs={12}>
               <CustomInput
@@ -112,15 +101,20 @@ function Addmodule() {
                 errorText={""}
                 value={formData.name}
                 textFieldSize={"small"}
-                placeHolderText={"Name"}
+                placeHolderText={"Enter the Module Name"}
               />
             </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Grid container spacing={1}>
           </Grid>
         </Grid>
         <Grid item xs={6}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Typography>NIC</Typography>
+              <Typography>Module Code</Typography>
             </Grid>
             <Grid item xs={12}>
               <CustomInput
@@ -128,49 +122,29 @@ function Addmodule() {
                   width: "575px",
                 }}
                 id={0}
-                TextFieldName={"nic"}
+                TextFieldName={"modulecode"}
                 labelText={""}
                 TextFieldType={"text"}
                 variant={"outlined"}
                 onchangeFunction={handleFieldChange}
                 errorTextState={false}
                 errorText={""}
-                value={formData.nic}
+                value={formData.modulecode}
                 textFieldSize={"small"}
-                placeHolderText={"NIC"}
+                placeHolderText={"Enter the Module code"}
               />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={6}>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Typography>Email</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <CustomInput
-                style={{
-                  width: "575px",
-                }}
-                id={0}
-                TextFieldName={"email"}
-                labelText={""}
-                TextFieldType={"text"}
-                variant={"outlined"}
-                onchangeFunction={handleFieldChange}
-                errorTextState={false}
-                errorText={""}
-                value={formData.email}
-                textFieldSize={"small"}
-                placeHolderText={"Email"}
-              />
-            </Grid>
           </Grid>
         </Grid>
+
         <Grid item xs={6}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Typography>Address</Typography>
+              <Typography>Lecturer Id</Typography>
             </Grid>
             <Grid item xs={12}>
               <CustomInput
@@ -178,40 +152,16 @@ function Addmodule() {
                 style={{
                   width: "575px",
                 }}
-                TextFieldName={"address"}
+                TextFieldName={"lecturerId"}
                 labelText={""}
                 TextFieldType={"text"}
                 variant={"outlined"}
                 onchangeFunction={handleFieldChange}
                 errorTextState={false}
                 errorText={""}
+                value={formData.lecturerId}
                 textFieldSize={"small"}
-                placeHolderText={"Address"}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={6}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Typography>Mobile</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <CustomInput
-                id={0}
-                style={{
-                  width: "575px",
-                }}
-                TextFieldName={"mobile"}
-                labelText={""}
-                TextFieldType={"text"}
-                variant={"outlined"}
-                onchangeFunction={handleFieldChange}
-                errorTextState={false}
-                errorText={""}
-                value={formData.mobile}
-                textFieldSize={"small"}
-                placeHolderText={"Mobile"}
+                placeHolderText={"Enter the Lecturere ID"}
               />
             </Grid>
           </Grid>
@@ -230,87 +180,17 @@ function Addmodule() {
         }}
       >
         <Grid item xs={12}>
-          <Typography
-            sx={{
-              color: "#ACACAC",
-            }}
-          >
-            Add Credentials
-          </Typography>
         </Grid>
         <Grid item xs={6}>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Typography>User Name</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <CustomInput
-                id={0}
-                style={{
-                  width: "575px",
-                }}
-                TextFieldName={"userName"}
-                labelText={""}
-                TextFieldType={"text"}
-                variant={"outlined"}
-                onchangeFunction={handleFieldChange}
-                errorTextState={false}
-                errorText={""}
-                value={formData.userName}
-                textFieldSize={"small"}
-                placeHolderText={"User Name"}
-              />
-            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={6}>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Typography>New Password</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <CustomInput
-                id={3}
-                style={{
-                  width: "575px",
-                }}
-                TextFieldName={"password"}
-                labelText={""}
-                placeHolderText={"New Password"}
-                TextFieldType={""}
-                variant={"outlined"}
-                onchangeFunction={handleFieldChange}
-                errorTextState={false}
-                errorText={""}
-                value={formData.password}
-                textFieldSize={"small"}
-              />
-            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={6}>
           <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Typography>Confirm Password</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <CustomInput
-                id={3}
-                style={{
-                  width: "575px",
-                }}
-                TextFieldName={"confirmpassword"}
-                labelText={""}
-                placeHolderText={"Confirm Password"}
-                TextFieldType={""}
-                variant={"outlined"}
-                onchangeFunction={handleFieldChange}
-                errorTextState={false}
-                errorText={""}
-                value={formData.confirmpassword}
-                textFieldSize={"small"}
-              />
-            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -319,13 +199,7 @@ function Addmodule() {
           container
           justifyContent="flex-end"
           alignItems="center"
-          sx={{
-            padding: 2,
-            backgroundColor: "#ffffff",
-            gap: "8px",
-            marginTop: "auto",
-            borderTop: "1px solid #ccc",
-          }}
+
         >
           <Grid item>
             <CustomButton
@@ -354,7 +228,7 @@ function Addmodule() {
               disableState={loading ? true : false}
               id={0}
               buttonFunction={() => {
-                courseRegisterFunction();
+                moduleRegisterFunction();
               }}
               style={{
                 borderRadius: "10px",
