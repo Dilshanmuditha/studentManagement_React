@@ -41,6 +41,19 @@ function AddStudent() {
     }));
   };
 
+  const clearFormFields = () => {
+    setFormData({
+      name: "",
+      nic: "",
+      email: "",
+      address: "",
+      mobile: "",
+      userName: "",
+      password: "",
+      confirmpassword: "",
+    });
+  };
+
   const studentRegisterFunction = async () => {
     try {
       const body = {
@@ -54,6 +67,7 @@ function AddStudent() {
       };
       console.log(body);
       const data = await AXIOS_INSTANCE.post(`/student`, body);
+
       console.log("response", data);
       if (data.status == 200) {
         dispatch(
@@ -65,6 +79,8 @@ function AddStudent() {
           })
         );
       }
+      setLoading(false);
+      clearFormFields();
       navigate("/students/students")
     } catch (error) {
       console.log(error);
@@ -334,12 +350,9 @@ function AddStudent() {
           <Grid item>
             <CustomButton
               variant={"outlined"}
-              buttonText={"Cancel"}
+              buttonText={"Clear"}
               id={1}
-              buttonFunction={resetForm}
-              //buttonFunction={() => {
-                //   handleClosePopup()
-             // }}
+              buttonFunction={clearFormFields}
               style={{
                 borderRadius: "10px",
                 width: "110px",

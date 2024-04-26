@@ -59,7 +59,7 @@ function Student() {
     
     try {
       setLoading(true)
-      const { data } = await AXIOS_INSTANCE.get(`/students`, {
+      const { data } = await AXIOS_INSTANCE.get('/students', {
         // params: parameters,
       })
       console.log(data)
@@ -72,7 +72,6 @@ function Student() {
       console.log(error)
     }
   }
-  
   useEffect(() => {
     fetchRowData(false, false)
   }, [tablePage])
@@ -98,11 +97,7 @@ function Student() {
         checkboxState={true}
         columnGroupingState={false}
         columnGroupingModel={[]}
-        // allRowCount={tableAllRowCount}
         pageSize={[10, 20]}
-        // page={tablePage - 1}
-        // dataLoading={loading}
-        // onPageChange={handlePageChange}
         setSelectedRows={setSelectedRows}
       />
     </div>
