@@ -197,8 +197,9 @@ function Department() {
                 variant={"outlined"}
                 buttonText={"Cancel"}
                 id={1}
-                buttonFunction={() => {
-                }}
+                buttonFunction={clearFormFields}
+                // buttonFunction={() => {
+                // }}
                 style={{
                   borderRadius: "10px",
                   width: "110px",

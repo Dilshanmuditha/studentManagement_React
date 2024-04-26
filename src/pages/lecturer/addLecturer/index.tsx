@@ -41,6 +41,19 @@ function AddLecturer() {
     }));
   };
 
+
+  const clearFormFields = () => {
+    setFormData({
+    name: "",
+    nic: "",
+    email: "",
+    address: "",
+    mobile: "",
+    userName: "",
+    password: "",
+    confirmpassword: "",
+    });
+  };
   const lecturerRegisterFunction = async () => {
     try {
       const body = {
@@ -65,6 +78,8 @@ function AddLecturer() {
           })
         );
       }
+      setLoading(false);
+      clearFormFields();
       navigate("/lecturer/lecturer")
     } catch (error) {
       console.log(error);
@@ -336,9 +351,10 @@ function AddLecturer() {
               variant={"outlined"}
               buttonText={"Cancel"}
               id={1}
-              buttonFunction={() => {
-                //   handleClosePopup()
-              }}
+              // buttonFunction={() => {
+              //   //   handleClosePopup()
+              // }}
+              buttonFunction={clearFormFields}
               style={{
                 borderRadius: "10px",
                 width: "110px",
