@@ -13,7 +13,7 @@ export interface FormData {
   name: string;
   modulecode: string;
   modulecontent: string;
-  lectureMaterialUpload: File | null; // Updated type for lecture material upload
+  lectureMaterialUpload: File | null;
   lectureMaterial: string;
   lecturerId: string;
 }
@@ -36,6 +36,18 @@ function Addmodule() {
     lectureMaterial: "",
     lecturerId: "",
   });
+
+
+  const clearFormFields = () => {
+    setFormData({
+    name: "",
+    modulecode: "",
+    modulecontent: "",
+    lectureMaterialUpload: null,
+    lectureMaterial: "",
+    lecturerId: "",
+    });
+  };
 
   const handleFieldChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -149,7 +161,7 @@ function Addmodule() {
           <CustomInput
             style={{ width: "100%" }}
             id={0}
-            TextFieldName={"lecturer Id"}
+            TextFieldName={"lecturerId"}
             labelText={""}
             TextFieldType={"text"}
             variant={"outlined"}
@@ -168,9 +180,10 @@ function Addmodule() {
               variant={"outlined"}
               buttonText={"Cancel"}
               id={1}
-              buttonFunction={() => {
-                // Handle cancel button click
-              }}
+              // buttonFunction={() => {
+              //   // Handle cancel button click
+              // }}
+              buttonFunction={clearFormFields}
               style={{
                 borderRadius: "10px",
                 width: "110px",
