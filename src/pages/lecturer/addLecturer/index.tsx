@@ -19,7 +19,7 @@ export interface FormData {
   confirmpassword: string | number | undefined;
 }
 
-function AddStudent() {
+function AddLecturer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,7 +41,20 @@ function AddStudent() {
     }));
   };
 
-  const studentRegisterFunction = async () => {
+
+  const clearFormFields = () => {
+    setFormData({
+    name: "",
+    nic: "",
+    email: "",
+    address: "",
+    mobile: "",
+    userName: "",
+    password: "",
+    confirmpassword: "",
+    });
+  };
+  const lecturerRegisterFunction = async () => {
     try {
       const body = {
         name: formData.name,
@@ -53,7 +66,7 @@ function AddStudent() {
         mobile: formData.mobile,
       };
       console.log(body);
-      const data = await AXIOS_INSTANCE.post(`/student`, body);
+      const data = await AXIOS_INSTANCE.post(`/lecturer`, body);
       console.log("response", data);
       if (data.status == 200) {
         dispatch(
@@ -61,11 +74,13 @@ function AddStudent() {
             alertState: true,
             alertType: "Success",
             alertMessage: "Successfully Added",
-            alertDescription: "Student Registration is successfully completed.",
+            alertDescription: "Lecturer Registration is successfully completed.",
           })
         );
       }
-      navigate("/students/students")
+      setLoading(false);
+      clearFormFields();
+      navigate("/lecturer/lecturer")
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +106,7 @@ function AddStudent() {
             height: "40px",
           }}
         >
-          Student Register
+          Lecturer Register
         </Typography>
       </Grid>
       <Grid container spacing={2}>
@@ -336,10 +351,10 @@ function AddStudent() {
               variant={"outlined"}
               buttonText={"Cancel"}
               id={1}
-              buttonFunction={resetForm}
-              //buttonFunction={() => {
-                //   handleClosePopup()
-             // }}
+              // buttonFunction={() => {
+              //   //   handleClosePopup()
+              // }}
+              buttonFunction={clearFormFields}
               style={{
                 borderRadius: "10px",
                 width: "110px",
@@ -359,7 +374,7 @@ function AddStudent() {
               disableState={loading ? true : false}
               id={0}
               buttonFunction={() => {
-                studentRegisterFunction();
+                lecturerRegisterFunction();
               }}
               style={{
                 borderRadius: "10px",
@@ -372,4 +387,4 @@ function AddStudent() {
   );
 }
 
-export default AddStudent;
+export default AddLecturer;
