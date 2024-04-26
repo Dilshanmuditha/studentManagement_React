@@ -77,60 +77,51 @@ function Module() {
 
   const digitalMarketingModules = [
     {
-      name: 'Statistics',
+      name: 'Introduction to Digital Marketing',
       content: [
-        { text: 'Descriptive statistics (mean, median, variance, etc.)', pdfLink: '/statistics.pdf' },
-        { text: 'Inferential statistics (hypothesis testing, confidence intervals)', pdfLink: '/statistics.pdf' },
-        { text: 'Probability distributions (normal, binomial, etc.)', pdfLink: '/statistics.pdf' }
+        { text: 'Why Internet Marketing', pdfLink: '/Why Internet Marketing.pdf' },
+        { text: 'Assignments', pdfLink: '/Assignments.pdf' }
       ]
     },
+    
+  ];
+
+  const projectManagementModules = [
     {
-      name: 'Programming and Tools',
+      name: 'Introduction',
       content: [
-        { text: 'Python or R programming', pdfLink: '/programming.pdf' },
-        { text: 'Data manipulation with pandas or dplyr', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Data visualization using matplotlib, seaborn, or ggplot2', pdfLink: '/data_visualization.pdf' }
+        { text: 'Conception: ‘The journey begins’', pdfLink: '/What is a project?.pdf' },
+        { text: 'The project environment: strategic planning', pdfLink: '/statistics.pdf' }
       ]
     },
+    
     {
-      name: 'Machine Learning',
+      name: 'Feasibility',
       content: [
-        { text: 'Supervised learning (regression, classification)', pdfLink: '/programming.pdf' },
-        { text: 'Unsupervised learning (clustering, dimensionality reduction)', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Model evaluation and selection', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Data Preprocessing',
-      content: [
-        { text: 'Data cleaning (handling missing values, outliers)', pdfLink: '/programming.pdf' },
-        { text: 'Feature engineering (creating new features)', pdfLink: '/data_manipulation.pdf' },
-        { text: 'Data scaling and normalization', pdfLink: '/data_visualization.pdf' }
-      ]
-    },
-    {
-      name: 'Big Data and Cloud Computing',
-      content: [
-        { text: 'Hadoop, Spark, or AWS', pdfLink: '/programming.pdf' },
-        { text: 'Distributed computing for large datasets', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-    {
-      name: 'Deep Learning',
-      content: [
-        { text: 'Neural networks, TensorFlow, or PyTorch', pdfLink: '/programming.pdf' },
-        { text: 'Convolutional neural networks (CNNs) and recurrent neural networks (RNNs)', pdfLink: '/data_manipulation.pdf' },
-      ]
-    },
-    {
-      name: 'Business Acumen',
-      content: [
-        { text: 'Understanding domain-specific problems', pdfLink: '/programming.pdf' },
-        { text: 'Communicating results to stakeholders', pdfLink: '/data_manipulation.pdf' },
+        { text: 'The feasibility study', pdfLink: '/feasibility study.pdf' },
       ]
     },
    
   ];
+
+  const businessAnalyticsModules = [
+    {
+      name: 'Introduction',
+      content: [
+        { text: 'Getting Started with Spreadsheet Modeling and Business Analytics', pdfLink: '/statistics.pdf' },
+        { text: 'Harvesting Spreadsheet Data', pdfLink: '/statistics.pdf' },
+        { text: 'Visualizing and Communicating Insights In Excel', pdfLink: '/statistics.pdf' }
+      ]
+    },
+    {
+      name: 'Making Predictions and Forecasts with Data',
+      content: [
+        { text: 'Using Prescriptive Analytics in Excel', pdfLink: '/programming.pdf' }
+      ]
+    },
+   
+  ];
+
 
 
   const handleModuleClick = (moduleName) => {
