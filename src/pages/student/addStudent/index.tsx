@@ -336,9 +336,10 @@ function AddStudent() {
               variant={"outlined"}
               buttonText={"Cancel"}
               id={1}
-              buttonFunction={() => {
+              buttonFunction={resetForm}
+              //buttonFunction={() => {
                 //   handleClosePopup()
-              }}
+             // }}
               style={{
                 borderRadius: "10px",
                 width: "110px",

@@ -32,6 +32,14 @@ function Department() {
     }));
   };
 
+  const clearFormFields = () => {
+    setFormData({
+      name: '',
+      coursecode: '',
+      lecturerId: '',
+    });
+  };
+
   const courseRegisterFunction = async () => {
     try {
       const body = {
@@ -52,6 +60,8 @@ function Department() {
           })
         );
       }
+      setLoading(false);
+      clearFormFields();
       navigate("/department")
     } catch (error) {
       console.log(error);
@@ -171,7 +181,7 @@ function Department() {
       <Grid
         container
         spacing={2}
-        justifyContent="flex-start"
+        justifyContent="flex-end"
         alignItems="center"
         sx={{
           padding: 0,
@@ -181,63 +191,43 @@ function Department() {
         }}
       >
         <Grid item xs={12}>
-        </Grid>
-        <Grid item xs={6}>
-          <Grid container spacing={1}>
-          </Grid>
-        </Grid>
-        <Grid item xs={6}>
-          <Grid container spacing={1}>
-          </Grid>
-        </Grid>
-        <Grid item xs={6}>
-          <Grid container spacing={1}>
+          <Grid container spacing={1} justifyContent="flex-end">
+            <Grid item>
+              <CustomButton
+                variant={"outlined"}
+                buttonText={"Cancel"}
+                id={1}
+                buttonFunction={() => {
+                }}
+                style={{
+                  borderRadius: "10px",
+                  width: "110px",
+                }}
+              />
+            </Grid>
+            <Grid item>
+              <CustomButton
+                variant={"contained"}
+                buttonText={
+                  loading ? (
+                    <CircularProgress sx={{ color: "white" }} size={28} />
+                  ) : (
+                    "Create"
+                  )
+                }
+                disableState={loading ? true : false}
+                id={0}
+                buttonFunction={() => {
+                  courseRegisterFunction();
+                }}
+                style={{
+                  borderRadius: "10px",
+                }}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <div style={{ marginTop: "auto" }}>
-        <Grid
-          container
-          justifyContent="flex-end"
-          alignItems="center"
-
-        >
-          <Grid item>
-            <CustomButton
-              variant={"outlined"}
-              buttonText={"Cancel"}
-              id={1}
-              buttonFunction={() => {
-                //   handleClosePopup()
-              }}
-              style={{
-                borderRadius: "10px",
-                width: "110px",
-              }}
-            />
-          </Grid>
-          <Grid item>
-            <CustomButton
-              variant={"contained"}
-              buttonText={
-                loading ? (
-                  <CircularProgress sx={{ color: "white" }} size={28} />
-                ) : (
-                  "Create"
-                )
-              }
-              disableState={loading ? true : false}
-              id={0}
-              buttonFunction={() => {
-                courseRegisterFunction();
-              }}
-              style={{
-                borderRadius: "10px",
-              }}
-            />
-          </Grid>
-        </Grid>
-      </div>
     </Box>
   );
 }
