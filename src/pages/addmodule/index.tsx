@@ -101,7 +101,7 @@ function Addmodule() {
         code: formData.modulecode,
         content: formData.modulecontent,
         file_path: null,
-        course_id: formData.courseId,
+        courseId: formData.courseId,
       };
       console.log(body);
       const data = await AXIOS_INSTANCE.post(`/module`, body);

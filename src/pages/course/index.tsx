@@ -84,7 +84,7 @@ const CourseView = () => {
     }
     
     try {
-      const { data } = await AXIOS_INSTANCE.get(`/module`, {
+      const { data } = await AXIOS_INSTANCE.get(`/module/course/${id}`, {
         // params: parameters,
       })
       console.log(data)

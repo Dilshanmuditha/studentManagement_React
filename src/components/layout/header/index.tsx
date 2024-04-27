@@ -13,6 +13,8 @@ const Header = (props: { drawerwidth: string }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const { drawerwidth } = props;
+  const userDataString:any = localStorage.getItem("user");
+  const userData = JSON.parse(userDataString);
   return (
     <>
       <AppBar
@@ -39,7 +41,7 @@ const Header = (props: { drawerwidth: string }) => {
             }}
           >
             {/* <Notification /> */}
-            <Typography>User Name</Typography>
+            <Typography>{userData.name}</Typography>
             <Avatar
               sx={{ cursor: "pointer" }}
               onClick={() => {
