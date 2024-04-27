@@ -14,6 +14,7 @@ import Dashboard from "../pages/dashboard";
 import Users from "../pages/users";
 import Profile from "../pages/profile";
 import AddUser from "../pages/users/addUser";
+import CourseView from "../pages/course";
 
 interface routesType {
   id: number;
@@ -186,6 +187,17 @@ const ROUTES: routesType[] = [
     sidebar: true,
     main: false,
     action: "logout",
+    children: [],
+  },
+  {
+    id: 8,
+    label: "",
+    icon: "", // Changed to a valid icon
+    path: "/course/:id",
+    component: <CourseView/>,
+    sidebar: false,
+    main: false,
+    action: "navigate",
     children: [],
   },
 ];

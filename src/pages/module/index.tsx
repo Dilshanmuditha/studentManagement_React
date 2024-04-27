@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { addAlert } from "../../features/alertSlice";
 import AXIOS_INSTANCE from "../../services/AxiosInstance";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CourseView from "../course";
 
 export interface Course {
   id: string;
@@ -26,6 +27,7 @@ function CourseList() {
       console.log(error)
     }
   }
+  
   const Course = async () => {
     try {
       const body = {
@@ -76,7 +78,7 @@ function CourseList() {
             height: "40px",
           }}
         >
-          Course Register
+          Registered Courses 
         </Typography>
       </Grid>
       <Grid container spacing={2}>
@@ -99,9 +101,6 @@ function CourseList() {
                   <br/>
                 course name : {course.name}
               </Typography>
-              <button onClick={() => Course()} style={{ width: '100%', marginTop: '10px' }}>
-                Click Here To Course Register
-              </button>
             </Link>
           </Grid>
         ))}
