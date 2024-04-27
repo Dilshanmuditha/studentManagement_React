@@ -3,11 +3,11 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const VERSION = import.meta.env.VITE_APP_VERSION;
 
 export const login = async (credentials: {
-  email: string;
+  userName: string;
   password: string;
 }) => {
-  return axios.post(`${BASE_URL}/backend/${VERSION}/auth/signIn`, credentials,{
-    withCredentials: true,
+  return axios.post(`${BASE_URL}/login`, credentials,{
+    withCredentials: false,
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export const adminRegister = async (credentials: {
   password: string;
 }) => {
   console.log(credentials)
-  return axios.post(`${BASE_URL}/${VERSION}/admin`, credentials,{
+  return axios.post(`${BASE_URL}/admin`, credentials,{
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export const resetPassword = async (body: { password: string },token:string) => 
 };
 
 export const isAuthenticated = () => {
-  return localStorage.getItem("user") ? true : true;
+  return localStorage.getItem("user") ? true : false;
 };
 
 export const getTokens = () => {

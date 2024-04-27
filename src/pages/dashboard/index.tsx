@@ -85,42 +85,7 @@ const Dashboard = () => {
   console.log(test);
   return (
     <>
-      <div style={{marginBottom:5}}>
-        <CustomInput
-          id={0}
-          labelText={"asdas"}
-          value={test.test}
-          variant={"outlined"}
-          TextFieldType={"text"}
-          errorTextState={false}
-          errorText={""}
-          TextFieldName={"test"}
-          onchangeFunction={handleInput}
-        />
-      </div>
-      <div style={{marginBottom:5}}>
-        <CustomSelect
-         option={selectOption} 
-         label={"labelSelect"} 
-         value={""} 
-         />
-      </div>
-      <div style={{marginBottom:5}}>
-         <CustomDateSelect DateValue={null}/>
-      </div>
-      <div style={{width:"100px",marginBottom:5}}>
-         <CustomCalendarView DateValue={null}/>
-      </div>
-      <DataGridContainer>
-        <CustomTable
-          rows={rows}
-          columns={columns}
-          checkboxState={true}
-          columnGroupingState={true}
-          columnGroupingModel={columnGroupingModel} 
-          pageSize={[10]}
-          />
-      </DataGridContainer>
+     
     </>
   );
 };

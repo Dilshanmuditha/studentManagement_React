@@ -3,36 +3,35 @@ import SidePopup from "../../../components/SidePopup";
 import AXIOS_INSTANCE from "../../../services/AxiosInstance";
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import CustomButton from "../../../components/buttons";
-import EditStudent from "../editStudent";
 
-interface StudentDetailProps {
+interface UserDetailProps {
   isPopupOpen: boolean;
   handleClosePopup: any;
-  selectedStudentID: number | undefined;
+  selectedUserID: number | undefined;
 }
 
-const StudentView = ({
+const UserView = ({
   isPopupOpen,
   handleClosePopup,
-  selectedStudentID,
-}: StudentDetailProps) => {
+  selectedUserID,
+}: UserDetailProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [studentDetail, setStudentDetail] = useState<any>(undefined);
+  const [userDetail, setUserDetail] = useState<any>(undefined);
   const [isEditPopupOpen, setIsEditPopupOpen] = useState(false)
 
-  const fetchStudentDetail = async () => {
+  const fetchuserDetail = async () => {
     try {
       const response = await AXIOS_INSTANCE.get(
-        `/students/${selectedStudentID}`
+        `/admin/${selectedUserID}`
       );
       
       console.log(response.data)
       if (response.status == 200) {
-        setStudentDetail(response.data);
+        setUserDetail(response.data);
         setIsLoading(false);
       }
     } catch (error) {
-      console.log("Fetch Buyer error", error);
+      console.log("Fetch User error", error);
       setIsLoading(false);
     }
   };
@@ -42,12 +41,13 @@ const StudentView = ({
   }
 
   const handleEditClosePopup = () => {
-    fetchStudentDetail()
+    fetchuserDetail()
     setIsEditPopupOpen(false)
   }
 
+
   useEffect(() => {
-    fetchStudentDetail();
+    fetchuserDetail();
   }, []);
   return (
     <SidePopup
@@ -107,7 +107,7 @@ const StudentView = ({
                     color: "#101828",
                   }}
                 >
-                  {studentDetail?.name}
+                  {userDetail?.name}
                 </Typography>
               </Grid>
             </Grid>
@@ -138,7 +138,7 @@ const StudentView = ({
                     color: "#101828",
                   }}
                 >
-                  {studentDetail?.email}
+                  {userDetail?.email}
                 </Typography>
               </Grid>
             </Grid>
@@ -159,7 +159,7 @@ const StudentView = ({
                     color: "#B8B8B8",
                   }}
                 >
-                  NIC
+                  Mobile
                 </Typography>
               </Grid>
               {/* Value */}
@@ -169,105 +169,7 @@ const StudentView = ({
                     color: "#101828",
                   }}
                 >
-                  {studentDetail?.nic}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            {/* Address */}
-            <Grid
-              container
-              item
-              xs={12}
-              style={{
-                margin: 0,
-                padding: "30px 48px 30px 48px",
-                borderBottom: "1px solid #EEEEEE",
-              }}
-            >
-              {/* Label */}
-              <Grid item xs={6} style={{ textAlign: "left" }}>
-                <Typography
-                  sx={{
-                    color: "#B8B8B8",
-                
-                  }}
-                >
-                  Address
-                </Typography>
-              </Grid>
-              {/* Value */}
-              <Grid item xs={6} style={{ textAlign: "right" }}>
-                <Typography
-                  sx={{
-                    color: "#101828",
-                  }}
-                >
-                  {studentDetail?.address}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            {/* PIC no */}
-            <Grid
-              container
-              item
-              xs={12}
-              style={{
-                margin: 0,
-                padding: "30px 48px 30px 48px",
-                borderBottom: "1px solid #EEEEEE",
-              }}
-            >
-              {/* Label */}
-              <Grid item xs={6} style={{ textAlign: "left" }}>
-                <Typography
-                  sx={{
-                    color: "#B8B8B8",
-                  }}
-                >
-                  Contact Number
-                </Typography>
-              </Grid>
-              {/* Value */}
-              <Grid item xs={6} style={{ textAlign: "right" }}>
-                <Typography
-                  sx={{
-                    color: "#101828",
-                  }}
-                >
-                  {studentDetail?.mobile}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              style={{
-                margin: 0,
-                padding: "30px 48px 30px 48px",
-                borderBottom: "1px solid #EEEEEE",
-              }}
-            >
-              {/* Label */}
-              <Grid item xs={6} style={{ textAlign: "left" }}>
-                <Typography
-                  sx={{
-                    color: "#B8B8B8",
-                  }}
-                >
-                  User Name
-                </Typography>
-              </Grid>
-              {/* Value */}
-              <Grid item xs={6} style={{ textAlign: "right" }}>
-                <Typography
-                  sx={{
-                    color: "#101828",
-                  }}
-                >
-                  {studentDetail?.userName}
+                  {userDetail?.mobile_number}
                 </Typography>
               </Grid>
             </Grid>
@@ -317,15 +219,15 @@ const StudentView = ({
       </div>
         </Box>
       )}
-      {isEditPopupOpen && (
+      {/* {isEditPopupOpen && (
         <EditStudent
           isPopupOpen={isEditPopupOpen}
           handleClosePopup={handleEditClosePopup}
           selectedStudentID={selectedStudentID}
         />
-      )}
+      )} */}
     </SidePopup>
   );
 };
 
-export default StudentView;
+export default UserView;

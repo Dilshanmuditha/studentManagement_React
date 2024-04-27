@@ -59,20 +59,11 @@ const LoginBox = ({ setViewState }: { setViewState: any }) => {
         return {
           ...pre,
           emailError: true,
-          emailErrorMsg: "You need to Enter Email",
+          emailErrorMsg: "You need to Enter User Name",
         };
       });
       return;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(felidValue.email)) {
-      setFelidValue((pre) => {
-        return {
-          ...pre,
-          emailError: true,
-          emailErrorMsg: "You need to Enter valid Email",
-        };
-      });
-      return;
-    }
+    } 
     if (felidValue.password == "") {
       setFelidValue((pre) => {
         return {
@@ -86,32 +77,24 @@ const LoginBox = ({ setViewState }: { setViewState: any }) => {
     try {
 
       const body = {
-        email:felidValue.email,
+        userName:felidValue.email,
         password:felidValue.password
       }
 
       const {data} = await login(body);
 
-      const { image:userImage, permissions:authorizedRout, role:userRole, ...userData } = data.admin;
-
-      const userAllData = {
-        authorizedRout:authorizedRout,
-        userRole:userRole,
-        userData:userData,
-      }
-      
-      setToken(data.token);
-      localStorage.setItem('user', JSON.stringify(userAllData));
+console.log(data)
+      localStorage.setItem('user', JSON.stringify(data));
       navigate("/")
 
     } catch (error) {
+      console.log(error)
       setError({
         state: true,
         massage: "Login Failed",
       });
     }
   };
-  console.log(felidValue);
   return (
     <Box
       sx={{

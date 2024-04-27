@@ -111,7 +111,7 @@ function Lecturer() {
         <LecturerView
           isPopupOpen={isDetailsPopupOpen}
           handleClosePopup={handleDetailClosePopup}
-          selectedStudentID={selectedLecturerID}
+          selectedLecturerID={selectedLecturerID}
         />
       )}
     </Box>

@@ -22,9 +22,14 @@ const LecturerView = ({
 
   const fetchLecturerDetail = async () => {
     try {
+      // const response = await AXIOS_INSTANCE.get(
+      //  `/lecturer/${selectedLecturerID}`
+      // );
+
       const response = await AXIOS_INSTANCE.get(
-        `/students/${selectedLecturerID}`
+        `/lecturer/${selectedLecturerID}`
       );
+      
       console.log(response.data)
       if (response.status == 200) {
         setLecturerDetail(response.data);
@@ -322,7 +327,7 @@ const LecturerView = ({
         <EditLecturer
           isPopupOpen={isEditPopupOpen}
           handleClosePopup={handleEditClosePopup}
-          selectedStudentID={selectedLecturerID}
+          selectedLecturerID={selectedLecturerID}
         />
       )}
     </SidePopup>

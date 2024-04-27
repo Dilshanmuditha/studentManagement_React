@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import CustomInput from "../../components/inputBox";
-import CustomSelect from "../../components/select";
+import CustomSelect, { IdropDown } from "../../components/select";
 import AXIOS_INSTANCE from "../../services/AxiosInstance";
 import { useDispatch } from "react-redux";
 import { addAlert } from "../../features/alertSlice";
@@ -11,13 +11,17 @@ import { useNavigate } from "react-router-dom";
 export interface FormData {
   name: string;
   coursecode: "0";
-  lecturerId: Number | string;
+  lecturerId: Number | string | any;
 }
 
 function Department() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [lecture, setLecture] = useState<IdropDown[]>([])
+  const [lectureId, setLectureId] = useState<{
+    label: string
+    value: string | number
+  } | null>({ label: "", value: "" })
   const [formData, setFormData] = useState<FormData>({
     name: "",
     coursecode: "0",
@@ -35,20 +39,37 @@ function Department() {
   const clearFormFields = () => {
     setFormData({
       name: '',
-      coursecode: '',
+      coursecode: '0',
       lecturerId: '',
     });
   };
+  const fetchLectureData = async () => {
+    try {
+      const response = await AXIOS_INSTANCE.get(/lecturer)
+      
+      if (response.status === 200) {
+        const result = response?.data
+
+        const formattedStates = result.map((item: any) => ({
+          label: item.name,
+          value: item.id,
+        }))
+        setLecture(formattedStates)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const courseRegisterFunction = async () => {
     try {
       const body = {
         name: formData.name,
-        coursecode: formData.coursecode,
-        lecturerId: formData.lecturerId,
+        code: formData.coursecode,
+        lecturer_id: formData.lecturerId,
       };
       console.log(body);
-      const data = await AXIOS_INSTANCE.post(`/course`, body);
+      const data = await AXIOS_INSTANCE.post(/course, body);
       console.log("response", data);
       if (data.status == 200) {
         dispatch(
@@ -62,11 +83,14 @@ function Department() {
       }
       setLoading(false);
       clearFormFields();
-      navigate("/department")
+      navigate('/University/degree');
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    fetchLectureData()
+  }, [])
   return (
     <Box
       sx={{
@@ -155,25 +179,23 @@ function Department() {
         <Grid item xs={6}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Typography>Lecturer Id</Typography>
+              <Typography>Lecturer</Typography>
             </Grid>
             <Grid item xs={12}>
-              <CustomInput
-                id={0}
-                style={{
-                  width: "575px",
-                }}
-                TextFieldName={"lecturerId"}
-                labelText={""}
-                TextFieldType={"text"}
-                variant={"outlined"}
-                onchangeFunction={handleFieldChange}
-                errorTextState={false}
-                errorText={""}
-                value={formData.lecturerId}
-                textFieldSize={"small"}
-                placeHolderText={"Enter the Lecturere ID"}
-              />
+            <CustomSelect
+              label={""}
+              placeHolderText={"Lecturer"}
+              autocompleteSize={"small"}
+              option={lecture}
+              value={lectureId}
+              onchangeValue={(_e, n) => {
+                setLectureId(n)
+                setFormData((prevData) => ({
+                  ...prevData,
+                  lecturerId: n?.value,
+                }))
+              }}
+            />
             </Grid>
           </Grid>
         </Grid>
@@ -202,7 +224,7 @@ function Department() {
                 // }}
                 style={{
                   borderRadius: "10px",
-                  width: "110px",
+                  width: "220px",
                 }}
               />
             </Grid>
@@ -233,4 +255,4 @@ function Department() {
   );
 }
 
-export default Department;
+export default Department;
