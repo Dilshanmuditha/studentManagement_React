@@ -61,9 +61,10 @@ function AddStudent() {
         email: formData.email,
         address: formData.address,
         nic: formData.nic,
-        userName: formData.userName,
-        password: formData.password,
+        userName: "std_"+formData.userName,
+        password: formData.password, 
         mobile: formData.mobile,
+        role: "student",
       };
       console.log(body);
       const data = await AXIOS_INSTANCE.post(`/student`, body);
