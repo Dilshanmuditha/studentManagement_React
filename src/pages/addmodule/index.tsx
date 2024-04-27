@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -8,6 +8,10 @@ import {
 import CustomInput from "../../components/inputBox";
 import CustomButton from "../../components/buttons";
 import { useNavigate } from "react-router-dom";
+import AXIOS_INSTANCE from "../../services/AxiosInstance";
+import { useDispatch } from "react-redux";
+import { addAlert } from "../../features/alertSlice";
+import CustomSelect, { IdropDown } from "../../components/select";
 
 export interface FormData {
   name: string;
@@ -27,17 +31,39 @@ function Addmodule() {
     modulecontent: string;
     lectureMaterialUpload: File | null;
     lectureMaterial: string;
-    lecturerId: string;
+    courseId:  Number | string | any;
   }>({
     name: "",
     modulecode: "",
     modulecontent: "",
     lectureMaterialUpload: null,
     lectureMaterial: "",
-    lecturerId: "",
+    courseId: 0,
   });
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const [course, setCourse] = useState<IdropDown[]>([])
+  const [courseId, setCourseId] = useState<{
+    label: string
+    value: string | number
+  } | null>({ label: "", value: "" })
+  const fetchCourseData = async () => {
+    try {
+      const response = await AXIOS_INSTANCE.get(`/course`);
+      
+      if (response.status === 200) {
+        const result = response?.data
 
-
+        const formattedStates = result.map((item: any) => ({
+          label: item.name,
+          value: item.id,
+        }))
+        setCourse(formattedStates)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const clearFormFields = () => {
     setFormData({
     name: "",
@@ -45,7 +71,7 @@ function Addmodule() {
     modulecontent: "",
     lectureMaterialUpload: null,
     lectureMaterial: "",
-    lecturerId: "",
+    courseId: 0,
     });
   };
 
@@ -69,9 +95,36 @@ function Addmodule() {
   };
 
   const moduleRegisterFunction = async () => {
-    // Implement module registration logic here
+    try {
+      const body = {
+        name: formData.name,
+        code: formData.modulecode,
+        content: formData.modulecontent,
+        file_path: null,
+        course_id: formData.courseId,
+      };
+      console.log(body);
+      const data = await AXIOS_INSTANCE.post(`/module`, body);
+      console.log("response", data);
+      if (data.status == 200) {
+        dispatch(
+          addAlert({
+            alertState: true,
+            alertType: "Success",
+            alertMessage: "Successfully Added",
+            alertDescription: "Module Registration is successfully completed.",
+          })
+        );
+      }
+      clearFormFields();
+    } catch (error) {
+      console.log(error);
+    }
+    
   };
-
+  useEffect(() => {
+    fetchCourseData();
+  }, []);
   return (
     <Box
       sx={{
@@ -148,30 +201,30 @@ function Addmodule() {
             placeHolderText={"Enter the Module content"}
           />
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Typography>Lecture Material Upload</Typography>
           <input
             type="file"
             accept=".pdf,.doc,.docx"
             onChange={handleFileChange}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={6}>
-          <Typography>Lecturer Id</Typography>
-          <CustomInput
-            style={{ width: "100%" }}
-            id={0}
-            TextFieldName={"lecturerId"}
-            labelText={""}
-            TextFieldType={"text"}
-            variant={"outlined"}
-            onchangeFunction={handleFieldChange}
-            errorTextState={false}
-            errorText={""}
-            value={formData.lecturerId}
-            textFieldSize={"small"}
-            placeHolderText={"Enter the Lecturer Id"}
-          />
+          <Typography>Course</Typography>
+          <CustomSelect
+              label={""}
+              placeHolderText={"Course"}
+              autocompleteSize={"small"}
+              option={course}
+              value={courseId}
+              onchangeValue={(_e, n) => {
+                setCourseId(n)
+                setFormData((prevData) => ({
+                  ...prevData,
+                  courseId: n?.value,
+                }))
+              }}
+            />
         </Grid>
         
         <Grid item xs={12}>

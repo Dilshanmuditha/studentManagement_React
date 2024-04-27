@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { addAlert } from "../../features/alertSlice";
 import AXIOS_INSTANCE from "../../services/AxiosInstance";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CourseView from "../course";
 
 export interface Course {
   id: string;
@@ -26,33 +27,7 @@ function CourseList() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const registerCourse = async (id: string) => {
-    try {
-      const body = {
-        id: id,
-        name: '',
-      };
-      console.log(body);
-      const data = await AXIOS_INSTANCE.post('/courses', body);
-
-      console.log("response", data);
-      if (data.status === 200) {
-        dispatch(
-          addAlert({
-            alertState: true,
-            alertType: "Success",
-            alertMessage: "Successfully Added",
-            alertDescription: "Course Registration is successfully completed.",
-          })
-        );
-      }
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }
 
   useEffect(() => {
     fetchCourseData();
@@ -79,7 +54,7 @@ function CourseList() {
             height: "40px",
           }}
         >
-          Course Register
+          Registered Courses 
         </Typography>
       </Grid>
       <Grid container spacing={2}>
@@ -101,9 +76,7 @@ function CourseList() {
                 <br />
                 Course name: {course.name}
               </Typography>
-              <button onClick={() => registerCourse(course.id)} style={{ width: '100%', marginTop: '10px' }}>
-                Click Here To Course Register
-              </button>
+
             </Link>
           </Grid>
         ))}
