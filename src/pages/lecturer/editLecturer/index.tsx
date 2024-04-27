@@ -79,7 +79,7 @@ const EditLecturer = ({
     const fetchStudentDetail = async () => {
         try {
           const response = await AXIOS_INSTANCE.get(
-            `/students/${selectedLecturerID}`
+            `/lecturer/${selectedLecturerID}`
           );
           console.log(response.data)
           if (response.status == 200) {
