@@ -46,7 +46,6 @@ const StudentView = ({
     setIsEditPopupOpen(false)
   }
 
-
   useEffect(() => {
     fetchStudentDetail();
   }, []);

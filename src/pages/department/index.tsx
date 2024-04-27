@@ -45,7 +45,7 @@ function Department() {
   };
   const fetchLectureData = async () => {
     try {
-      const response = await AXIOS_INSTANCE.get(`/lecturer`)
+      const response = await AXIOS_INSTANCE.get('/lecturer');
       
       if (response.status === 200) {
         const result = response?.data
@@ -69,7 +69,9 @@ function Department() {
         lecturer_id: formData.lecturerId,
       };
       console.log(body);
-      const data = await AXIOS_INSTANCE.post(`/course`, body);
+      //const data = await AXIOS_INSTANCE.post(/course, body);
+      const data = await AXIOS_INSTANCE.post('/courses', body);
+
       console.log("response", data);
       if (data.status == 200) {
         dispatch(
@@ -224,7 +226,7 @@ function Department() {
                 // }}
                 style={{
                   borderRadius: "10px",
-                  width: "110px",
+                  width: "220px",
                 }}
               />
             </Grid>
@@ -255,4 +257,4 @@ function Department() {
   );
 }
 
-export default Department;
+export default Department;
