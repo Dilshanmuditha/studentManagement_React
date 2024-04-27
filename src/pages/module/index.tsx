@@ -15,9 +15,17 @@ function CourseList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
   const [expandedModule, setExpandedModule] = useState<string>('');
-
+  const fetchCourseData = async () => {
+    try {
+      const response = await AXIOS_INSTANCE.get(`/course`)
+      console.log(response)
+        setCourses(response?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const Course = async () => {
     try {
       const body = {
@@ -38,15 +46,14 @@ function CourseList() {
         );
       }
       setLoading(false);
-      navigate("/lecturer/lecturer");
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    setCourses([{ id: "123", name: "Example Course" }]);
-  }, []);
+    fetchCourseData()
+  }, [])
 
   return (
     <Box
@@ -75,7 +82,8 @@ function CourseList() {
       <Grid container spacing={2}>
         {courses.map((course) => (
           <Grid item xs={4} key={course.id}>
-            <Link to={`/modulelist/${course.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/course/${course.id}`} style={{ textDecoration: "none" }}>
+            
               <Typography
                 sx={{
                   backgroundColor: "#024D81",
@@ -87,7 +95,9 @@ function CourseList() {
                   alignItems: "center",
                 }}
               >
-                {course.name}
+                 course code : {course?.code}
+                  <br/>
+                course name : {course.name}
               </Typography>
               <button onClick={() => Course()} style={{ width: '100%', marginTop: '10px' }}>
                 Click Here To Course Register
