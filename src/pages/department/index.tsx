@@ -70,7 +70,7 @@ function Department() {
       };
       console.log(body);
       //const data = await AXIOS_INSTANCE.post(/course, body);
-      const data = await AXIOS_INSTANCE.post('/courses', body);
+      const data = await AXIOS_INSTANCE.post('/course', body);
 
       console.log("response", data);
       if (data.status == 200) {
