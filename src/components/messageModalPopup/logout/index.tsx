@@ -2,9 +2,11 @@ import { Box, Divider, Typography } from "@mui/material";
 import CustomButton from "../../buttons";
 import { useDispatch } from "react-redux";
 import { addMessageModal } from "../../../features/messageModalSlice";
+import { useNavigate } from "react-router-dom";
 
 const LogOut = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleClose = () => {
         dispatch(
           addMessageModal({
@@ -13,6 +15,12 @@ const LogOut = () => {
           })
         );
       };
+
+      const handleLogout = () =>{
+        localStorage.removeItem('user');
+        window.location.reload();
+      }
+
   return (
     <>
       <Box
@@ -69,7 +77,7 @@ const LogOut = () => {
             variant={"contained"}
             buttonText={"Logout"}
             id={1}
-            buttonFunction={() => {}}
+            buttonFunction={handleLogout}
           />
         </Box>
       </Box>

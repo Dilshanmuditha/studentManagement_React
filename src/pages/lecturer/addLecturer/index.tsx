@@ -61,9 +61,10 @@ function AddLecturer() {
         email: formData.email,
         address: formData.address,
         nic: formData.nic,
-        userName: formData.userName,
-        password: formData.password,
+        userName: "lec_"+formData.userName,
+        password: formData.password, 
         mobile: formData.mobile,
+        role: "lecturer",
       };
       console.log(body);
       const data = await AXIOS_INSTANCE.post(`/lecturer`, body);
